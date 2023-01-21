@@ -1,0 +1,56 @@
+-- I.Simple queries 
+  -- I.Ex 1: 459 rows
+SELECT
+EventName,
+EventDate
+FROM
+tblEvent
+ORDER BY
+EventDate DESC;  
+
+  -- I . Ex 2
+SELECT 
+TOP 5
+EventName AS What,
+EventDetails AS Detail
+FROM
+tblEvent te
+ORDER BY
+EventDate ASC;
+
+  -- I . Ex 3:
+SELECT
+TOP 3
+CategoryID,
+CategoryName
+FROM
+tblCategory tc
+ORDER BY
+CategoryName DESC;
+
+-- I. Ex 4: Click on the Text instead of Grid to switch
+-- First 2 events
+SELECT
+TOP 2 EventName,
+EventDetails
+FROM
+tblEvent te
+ORDER BY
+EventDate ASC;
+
+-- Last 2 events
+SELECT
+TOP 2 EventName,
+EventDetails
+FROM
+tblEvent te
+ORDER BY
+EventDate DESC;
+
+
+
+
+
+
+
+
