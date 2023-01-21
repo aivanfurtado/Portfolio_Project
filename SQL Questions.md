@@ -29,7 +29,7 @@ Ex 1:
 Write a query to list out all the events from the tblEvent table in category number 11 (which corresponds to Love and Relationships, as it happens)
 
 Ex 2:    
-Create a query which lists out all the events which took place in February 2005.This should return 11 rows. Now add a criterion to show only those events which happened since 1970 (you may need to use parentheses to get this to give the correct answer).
+Create a query which lists out all the events which took place in February 2005.This should return 2 rows. 
 
 Ex 3:    
 Create a query which lists out all the tblEvent events which include the word Teletubbies. Now add an OR condition to your query so that it lists out all events whose:
@@ -52,49 +52,7 @@ Ex 7:
 Events which are in categories 5 or 6 (War/conflict and Death/disaster), but which don't mention either War or Death in the EventDetails column.
  
 
-III.	Calculations
-
-Ex 1:   
-Create a query listing out each event with the length of its name, with the "shortest event" first. To calculate number of characters, use function LEN() .
-
-Ex 2:   
-Create a query to list out for each event the category number that it belongs to. Use CONCAT function.
-
-Ex 3:    
-The tblContinent table lists out the world's continents, but there are gaps.
-Use these 3 functions to show 3 ways of changing the Null value in Summary column to be ‘No summary’: ISNULL(), COALESCE(), CASE WHEN.
-
-Ex 4:   
-Write a query to divide countries into these groups.
-  
-Ex 5:    
-It's traditional to express a country's size in terms of how many times you could fit Wales into it - so let's do this! First create the following columns in a query.  
-You'll need to know that Wales is 20,761 square kilometres in area. Now extend your query to show a text description of how many times each country could accommodate Wales. Finally, change your query's sort order so that it lists countries with the closest in size to Wales first.
-
-Ex 6:    
-Write a query to list out all the event names that begin and end with vowels.
-
-Ex 7:   
-Write a query to list out all the event names that begin and end with the same letter.
- 
-IV.	Calculations using dates.
-
-Ex 1:    
-First create a query showing events which took place in your year of birth, neatly formatted. Amend your query so that it shows the event date neatly formatted using FORMAT() function.
-
-Ex 2:   
-The idea behind this exercise is to see what was happening in the world around the time when you were born (but you can use any reference date). First create a query to show the number of days which have elapsed for any event since your birthday. The ABS function returns the absolute value of a number (for example, ABS(42) and ABS(-42) both equal 42). Use this to list the events in order of closeness to your birthday.
-
-Ex 3:    
-Create a query to show the day of the week and the day number on which each event occurred. Use this to show:
-*	That mercifully there weren't any events on Friday the 13th,
-*	That there was one event on Thursday 12th (the day before), and
-*	That there were two events on Saturday the 14th (the day after).
-
-Ex 4:   
-Create a query to show the full dates for any event in the below format.
- 
-V.	Basic joins
+III. Basic joins
 
 Ex 1:   
 Right click on tblAuthor and View Diagram, you can see the tblAuthor and tblEpisode are linked by AuthorId. Each episode is linked to the person who wrote it. Add columns and filters to your query so that it shows who wrote the "special" episodes (there should be 13 listed out). Remember to tidy up the query.
@@ -127,7 +85,49 @@ Create a query to list out the appearances of enemies in episodes which have len
 
 Ex 8:   
 Create a query using an outer join to list out those countries which have no corresponding events.
+  
+IV.	Calculations using dates.
+
+Ex 1:    
+First create a query showing events which took place in your year of birth, neatly formatted. Amend your query so that it shows the event date neatly formatted using FORMAT() function.
+
+Ex 2:   
+The idea behind this exercise is to see what was happening in the world around the time when you were born (but you can use any reference date). First create a query to show the number of days which have elapsed for any event since your birthday. The ABS function returns the absolute value of a number (for example, ABS(42) and ABS(-42) both equal 42). Use this to list the events in order of closeness to your birthday.
+
+Ex 3:    
+Create a query to show the day of the week and the day number on which each event occurred. Use this to show:
+*	That mercifully there weren't any events on Friday the 13th,
+*	That there was one event on Thursday 12th (the day before), and
+*	That there were two events on Saturday the 14th (the day after).
+
+Ex 4:   
+Create a query to show the full dates for any event in the below format.
  
+V.	Calculations
+
+Ex 1:   
+Create a query listing out each event with the length of its name, with the "shortest event" first. To calculate number of characters, use function LEN().
+
+Ex 2:   
+Create a query to list out for each event the category number that it belongs to. Use CONCAT function.
+
+Ex 3:    
+The tblContinent table lists out the world's continents, but there are gaps.
+Use these 3 functions to show 3 ways of changing the Null value in Summary column to be ‘No summary’: ISNULL(), COALESCE(), CASE WHEN.
+
+Ex 4:   
+Write a query to divide countries into these groups.
+  
+Ex 5:    
+It's traditional to express a country's size in terms of how many times you could fit Wales into it - so let's do this! First create the following columns in a query.  
+You'll need to know that Wales is 20,761 square kilometres in area. Now extend your query to show a text description of how many times each country could accommodate Wales. Finally, change your query's sort order so that it lists countries with the closest in size to Wales first.
+
+Ex 6:    
+Write a query to list out all the event names that begin and end with vowels.
+
+Ex 7:   
+Write a query to list out all the event names that begin and end with the same letter.
+
 VI.	Aggregation and grouping.
 
 Ex 1:   
