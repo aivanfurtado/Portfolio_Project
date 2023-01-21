@@ -51,14 +51,13 @@ Events which are in the Space country (number 13), but which don't mention Space
 Ex 7:   
 Events which are in categories 5 or 6 (War/conflict and Death/disaster), but which don't mention either War or Death in the EventDetails column.
  
-
 III. Basic joins
 
 Ex 1:   
 Right click on tblAuthor and View Diagram, you can see the tblAuthor and tblEpisode are linked by AuthorId. Each episode is linked to the person who wrote it. Add columns and filters to your query so that it shows who wrote the "special" episodes (there should be 13 listed out). Remember to tidy up the query.
 
 Ex 2:    
-Each episode in the database has assigned to it the doctor who played the starring role:
+Each episode in the database has assigned to it the doctor who played the starring role.
 Create a join to list out all the doctors who appeared in episodes made in 2010.
 
 Ex 3:    
