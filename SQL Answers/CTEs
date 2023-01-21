@@ -1,0 +1,129 @@
+-- VIII. CTEs
+ -- VIII. Ex1: 3 rows
+ WITH ThisAndThat AS (
+	SELECT
+		e.EventId,
+		CASE WHEN e.EventDetails LIKE '%this%' THEN 1 ELSE 0 END AS IfThis,
+		CASE WHEN e.EventDetails LIKE '%that%' THEN 1 ELSE 0 END AS IfThat
+	FROM
+		tblEvent AS e
+)
+, FirstResults AS (
+	SELECT
+		t.IfThis,
+		t.IfThat,
+		COUNT(*) AS Number_of_events
+	FROM
+		ThisAndThat AS t
+	GROUP BY
+		t.IfThis,
+		t.IfThat
+)
+SELECT
+	e.EventName,
+	e.EventDetails
+FROM
+	tblEvent AS e
+	INNER JOIN ThisAndThat AS t ON e.EventID = t.EventID
+WHERE
+	IfThis = 1 AND IfThat = 1;
+
+-- VIII. Ex2: 230 rows
+WITH Second_Half_Derived AS
+(SELECT
+		EventName,
+		CountryID
+	
+	FROM
+		tblEvent 
+	WHERE
+		EventName LIKE '%[N-Z]') 
+SELECT 
+	EventName,
+	CountryName
+FROM 
+	Second_Half_Derived
+INNER JOIN 
+	tblCountry c ON Second_Half_Derived.CountryID = c.CountryId;
+  
+  -- VIII. Ex3: 4 rows
+  WITH mpEpisodes AS (
+	SELECT
+		e.EpisodeId
+	FROM
+		tblEpisode AS e
+		INNER JOIN tblAuthor AS a ON e.AuthorId = a.AuthorId
+	WHERE
+		a.AuthorName LIKE '%mp%'
+)
+SELECT DISTINCT
+	c.CompanionName
+FROM 
+	mpEpisodes AS e
+	INNER JOIN tblEpisodeCompanion AS ec ON e.EpisodeId = ec.EpisodeId
+	INNER JOIN tblCompanion AS c ON ec.CompanionId = c.CompanionId
+ORDER BY
+	c.CompanionName;
+
+-- VIII. Ex4: 116 rows
+WITH NonOwlEvents AS (
+	SELECT
+		e.EventId,
+		e.EventName,
+		e.EventDate,
+		e.CountryID,
+		e.CategoryID
+	FROM
+		tblEvent AS e
+	WHERE
+		e.EventDetails NOT LIKE '%o%' and
+		e.EventDetails NOT LIKE '%w%' and
+		e.EventDetails NOT LIKE '%l%' 
+)
+, OtherEventsInNonOwlCountries AS (
+	SELECT DISTINCT
+		c.CountryName,
+		e.EventName,
+		e.CategoryID
+	FROM
+		NonOwlEvents AS noe
+		INNER JOIN tblCountry AS c
+			ON noe.CountryID = c.CountryID
+		INNER JOIN tblEvent AS e
+			ON noe.CountryID = e.CountryID
+)
+SELECT DISTINCT
+	e.EventName,
+	e.EventDate,
+	c.CategoryName,
+	cy.CountryName
+FROM
+	OtherEventsInNonOwlCountries AS other
+	INNER JOIN tblCategory AS c
+		ON other.CategoryID = c.CategoryID
+	INNER JOIN tblEvent AS e
+		ON c.CategoryID = e.CategoryID
+	INNER JOIN tblCountry AS cy
+		ON e.CountryID = cy.CountryID
+ORDER BY
+	e.EventDate;
+
+ -- VIII. EX 5:
+ WITH EventsByEra AS (
+	SELECT
+		CASE
+			WHEN YEAR(e.EventDate) < 1900 THEN '19th Century and Earlier'
+			WHEN YEAR(e.EventDate) < 2000 THEN '20th Century'
+			ELSE '21st Century'
+		END AS Era,
+		e.EventID
+	FROM
+		tblEvent AS e
+)
+SELECT 
+	e.Era,
+	COUNT(*) AS Number_of_events
+FROM 
+	EventsByEra AS e
+GROUP BY 
+	e.Era;
