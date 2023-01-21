@@ -1,0 +1,123 @@
+-- III. Basic Joins
+ -- III. Ex 1: 13 rows
+SELECT
+tblAuthor.AuthorName,
+tblEpisode.Title,
+tblEpisode.EpisodeType
+FROM
+tblAuthor
+INNER JOIN tblEpisode ON
+tblAuthor.AuthorId = tblEpisode.AuthorId
+WHERE
+tblEpisode.EpisodeType LIKE '%special%'
+ORDER BY
+tblEpisode.Title;
+
+ -- III. Ex 2: 15 rows
+SELECT
+td.DoctorName ,
+te.Title
+FROM
+tblEpisode te
+LEFT JOIN tblDoctor td ON
+te.DoctorId = td.DoctorId
+WHERE
+YEAR(te.EpisodeDate) = 2010;
+
+ -- III. Ex 3: 459 rows
+SELECT
+CountryName ,
+eventname,
+eventdate
+FROM
+tblCountry tc
+INNER JOIN tblEvent te ON
+tc.CountryID = te.CountryID
+ORDER BY
+Eventdate;
+
+-- III. Ex 4: 5 rows
+SELECT
+te.EventName,
+tc.CountryName,
+tc2.ContinentName
+FROM
+tblEvent te
+LEFT JOIN tblCountry tc ON
+te.CountryID = tc.CountryID
+LEFT JOIN tblContinent tc2 ON
+tc.ContinentID = tc2.ContinentID
+WHERE
+tc.CountryName = 'Russia'
+OR tc2.ContinentName = 'Antarctic';
+
+-- III. Ex 5:
+-- Inner join, 459 rows
+SELECT
+EventName ,
+EventDate ,
+tc.CategoryName
+FROM
+tblEvent te
+INNER JOIN tblCategory tc ON
+te.CategoryID = tc.CategoryID;
+
+-- Full outer join, 461 rows
+SELECT
+EventName ,
+EventDate ,
+tc.CategoryName
+FROM
+tblEvent te
+FULL OUTER JOIN tblCategory tc ON
+te.CategoryID = tc.CategoryID
+WHERE EventID IS NULL; --  2 rows
+
+-- III. Ex 6: 16 rows
+SELECT
+Title,
+authorname,
+enemyname
+FROM
+tblEpisode te
+INNER JOIN tblAuthor ta ON
+te.AuthorId = ta.AuthorId
+INNER JOIN tblEpisodeEnemy tee ON
+te.EpisodeId = tee.EpisodeId
+INNER JOIN tblEnemy te2 ON
+tee.EnemyId = te2.EnemyId
+WHERE
+te2.EnemyName = 'Daleks';
+
+-- III. Ex 7: 2 rows
+SELECT 
+ta.AuthorName ,
+len(ta.AuthorName),
+te.Title ,
+len(te.Title),
+td.DoctorName ,
+len(td.DoctorName),
+te2.EnemyName ,
+len(te2.EnemyName),
+len(ta.AuthorName) + len(te.Title) + len(td.DoctorName) + len(te2.EnemyName) AS [Total Length]
+FROM
+tblEpisode te
+INNER JOIN tblAuthor ta ON
+te.AuthorId = ta.AuthorId
+INNER JOIN tblDoctor td ON 
+te.DoctorId = td.DoctorId 
+INNER JOIN tblEpisodeEnemy tee ON
+te.EpisodeId = tee.EpisodeId
+INNER JOIN tblEnemy te2 ON
+tee.EnemyId = te2.EnemyId
+WHERE len(ta.AuthorName) + len(te.Title) + len(td.DoctorName) + len(te2.EnemyName) < 40;
+
+-- III. Ex 8: 1 row
+SELECT
+*
+FROM
+tblCountry tc
+FULL OUTER JOIN tblEvent te ON
+tc.CountryID = te.CountryID
+WHERE
+te.EventID IS NULL;
