@@ -1,0 +1,125 @@
+-- VI. Aggregation and grouping.
+-- VI. Ex 1: 25 rows
+SELECT
+ta.AuthorName,
+COUNT(DISTINCT EpisodeId) AS Number_of_Espisodes,
+MIN (EpisodeDate) as Earliest_episode_date,
+MAX (EpisodeDate) as Latest_episode_date
+FROM
+tblEpisode te
+INNER JOIN tblAuthor ta ON
+te.AuthorId = ta.AuthorId
+GROUP BY
+ta.AuthorName
+ORDER BY
+COUNT(DISTINCT EpisodeId) DESC;
+
+-- VI. Ex 2: 18 rows
+SELECT
+	tc.CategoryName ,
+	COUNT(DISTINCT te.EventID) AS Count_Event
+FROM
+	tblEvent te
+LEFT JOIN tblCategory tc ON
+	tc.CategoryID = te.CategoryID
+GROUP BY
+	tc.CategoryName
+ORDER BY
+	COUNT(DISTINCT te.EventID) DESC;
+  
+-- VI. Ex 3: 
+SELECT
+	COUNT(DISTINCT EventID) as Number_of_events,
+	MIN(EventDate) as First_Date,
+	MAX(EventDate) as Last_Date
+FROM
+	tblEvent te;
+
+-- VI. Ex 4: 42 rows
+SELECT
+	tc2.ContinentName ,
+	tc.CountryName ,
+	COUNT(DISTINCT te.EventID) AS Number_of_events
+FROM
+	tblEvent te
+INNER JOIN tblCountry tc ON
+	te.CountryID = tc.CountryID
+INNER JOIN tblContinent tc2 ON
+	tc2.ContinentID = tc.ContinentID
+GROUP BY
+	tc2.ContinentName ,
+	tc.CountryName;
+
+-- VI. Ex 5: 4 rows
+SELECT
+	ta.AuthorName ,
+	td.DoctorName ,
+	COUNT(DISTINCT te.EpisodeId) AS Number_of_episodes
+FROM
+	tblEpisode te
+INNER JOIN tblAuthor ta ON
+	te.AuthorId = ta.AuthorId
+INNER JOIN tblDoctor td ON
+	te.DoctorId = td.DoctorId
+GROUP BY
+	ta.AuthorName ,
+	td.DoctorName
+HAVING
+	COUNT(DISTINCT te.EpisodeId) > 5
+ORDER BY
+	COUNT(DISTINCT te.EpisodeId) DESC;
+
+-- VI. Ex 6: 4 rows
+SELECT
+	YEAR(te.EpisodeDate) AS Episode_YEAR,
+	te2.EnemyName,
+	COUNT(DISTINCT te.EpisodeId) AS Episodes
+FROM
+	tblEpisode te
+INNER JOIN tblEpisodeEnemy tee ON
+	te.EpisodeId = tee.EpisodeId
+INNER JOIN tblEnemy te2 ON
+	tee.EnemyId = te2.EnemyId
+INNER JOIN tblDoctor td ON 
+	te.DoctorId = td.DoctorId 
+WHERE YEAR(td.BirthDate) < 1970
+GROUP BY
+	YEAR(te.EpisodeDate) ,
+	te2.EnemyName
+HAVING 
+	COUNT(DISTINCT te.EpisodeId) > 1
+ORDER BY 
+	COUNT(DISTINCT te.EpisodeId) DESC;
+
+-- VI. Ex 7:12 rows without nulls
+SELECT
+	LEFT(tc.CategoryName, 1),
+	COUNT(DISTINCT te.EventID) AS Number_of_events,
+	AVG(LEN(EventName)) AS Average_event_name_length
+FROM
+	tblEvent te
+INNER JOIN tblCategory tc ON
+	te.CategoryID = tc.CategoryID
+GROUP BY
+	LEFT(tc.CategoryName, 1)
+ORDER BY 
+	AVG(LEN(EventName)) DESC;
+
+-- VI. Ex 8:
+SELECT
+	CONCAT(1 + YEAR(EventDate) / 100,  
+		CASE WHEN RIGHT(1 + YEAR(EventDate) / 100, 1) = 1 
+			 THEN 'st'
+			 WHEN RIGHT(1 + YEAR(EventDate) / 100, 1) = 2
+			 THEN ' nd'
+			 WHEN RIGHT(1 + YEAR(EventDate) / 100, 1) = 3 
+			 THEN ' rd'
+			 ELSE 'th'
+			 END,
+		' Century')
+	as Century,
+	COUNT(DISTINCT EventID) as Number_of_events
+FROM
+	tblEvent te
+GROUP BY
+	1 + YEAR(EventDate) / 100;
