@@ -1,0 +1,75 @@
+-- II. Use WHERE
+  -- II.Ex 1: 
+SELECT
+*
+FROM
+tblEvent te
+WHERE
+CategoryID = 11;
+
+-- II.Ex 2: 2 rows
+SELECT
+*
+FROM
+tblEvent te
+WHERE
+YEAR(EventDate) = 2005
+AND MONTH(EventDate) = 2;
+
+-- II.Ex 3: 2 rows
+SELECT
+*
+FROM
+tblEvent te
+WHERE
+EventName LIKE '%Teletubbies %'
+OR EventName LIKE '%Pandy %';
+
+-- II.Ex 4: 11 rows
+SELECT
+*
+FROM
+tblEvent te
+WHERE
+(CountryID IN (8, 22, 30, 35)
+OR EventDetails LIKE '%Water %'
+OR CategoryID = 4);
+
+-- II.Ex 5: 4 rows
+SELECT
+*
+FROM
+tblEvent te
+WHERE
+CategoryID != 14
+AND EventDetails LIKE '%Train%';
+
+-- II.Ex 6: 6 rows
+SELECT
+*
+FROM
+tblEvent te
+WHERE
+CountryID = 13
+AND EventName NOT LIKE '%Space%'
+AND EventDetails NOT LIKE '%Space%';
+
+-- II.Ex 7: 91 rows
+SELECT
+*
+FROM
+tblEvent te
+WHERE
+CategoryID IN (5, 6)
+AND EventDetails NOT LIKE '%War%'
+AND  EventDetails NOT LIKE '%Death%';
+
+
+
+
+
+
+
+
+
+
