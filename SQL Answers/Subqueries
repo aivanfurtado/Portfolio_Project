@@ -1,0 +1,98 @@
+-- VII. Subqueries
+-- VII. Ex 1: 4 rows
+SELECT
+	eventname,
+	eventdate
+FROM
+	tblEvent te
+WHERE
+	eventdate > 
+(
+	SELECT
+		MAX(eventdate)
+	FROM
+		tblEvent te
+	WHERE
+		CountryID = 21)
+ORDER BY
+	EventDate DESC;
+
+-- VII. Ex 2: 204 rows
+SELECT
+	EventName,
+	LEN(EventName) AS Length_Event_Name
+FROM
+	tblEvent te2
+WHERE
+	LEN(EventName) >
+(
+	SELECT
+		AVG(LEN(eventname))
+	FROM
+		tblEvent te)
+ORDER BY
+	LEN(EventName) DESC;
+  
+-- VII. Ex 3: 8 rows
+SELECT
+	tc4.ContinentName ,
+	EventName
+FROM
+	tblEvent te2
+INNER JOIN tblCountry tc3 ON
+	te2.CountryID = tc3.CountryID
+INNER JOIN tblContinent tc4 ON
+	tc3.ContinentID = tc4.ContinentID
+WHERE
+	tc4.ContinentName IN (
+	SELECT 
+		TOP 3 tc2.ContinentName 
+	FROM
+		tblEvent te
+	INNER JOIN tblCountry tc ON
+		te.CountryID = tc.CountryID
+	INNER JOIN tblContinent tc2 ON
+		tc.ContinentID = tc2.ContinentID
+	GROUP BY
+		tc2.ContinentName
+	ORDER BY
+		COUNT(DISTINCT EventID) ASC);
+    
+-- VII. Ex 4: 5 rows
+SELECT
+	A.CountryName
+FROM
+	TblCountry A
+INNER JOIN 
+(
+	SELECT
+		TE.CountryID,
+		COUNT(DISTINCT TE.EventID) AS Countd_Event
+	FROM
+		tblEvent TE
+	GROUP BY
+		TE.CountryID
+	HAVING
+		COUNT(DISTINCT TE.EventID) > 8) B ON
+	A.CountryID = B.CountryID;
+  
+-- VII. Ex 5: 8 rows
+SELECT
+	EventName
+FROM
+	tblEvent te
+WHERE
+	CountryID NOT IN (
+		SELECT
+			TOP 30 CountryID
+		FROM
+			tblCountry tc
+		ORDER BY
+			countryname DESC)
+	AND CategoryID NOT IN (
+		SELECT
+			TOP 15 CategoryID
+		FROM
+			tblCategory tc2
+		ORDER BY
+			categoryname DESC);
